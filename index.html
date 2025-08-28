@@ -5,35 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Animales Random — Solo Perro y Zorro</title>
   <style>
-    :root{
-      --bg:#0f172a; --muted:#94a3b8; --text:#e5e7eb; --accent:#22d3ee; --accent-2:#8b5cf6; --danger:#ef4444;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial;min-height:100dvh;display:grid;place-items:center;color:var(--text);background:radial-gradient(1200px 600px at 20% -10%,rgba(34,211,238,.15),transparent),radial-gradient(1000px 500px at 120% 10%,rgba(139,92,246,.12),transparent),#0f172a}
-    .app{width:clamp(320px,90vw,680px);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.45);overflow:hidden}
-    header{padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    header h1{font-size:1.1rem;margin:0;color:#fff;letter-spacing:.3px}
-    header small{color:var(--muted)}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .segmented{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);padding:6px;border-radius:14px;display:flex;gap:6px}
-    .chip{cursor:pointer;padding:8px 12px;border-radius:10px;font-size:.9rem;color:var(--text);border:1px solid rgba(255,255,255,.08);background:color-mix(in oklab,transparent 92%,#fff 8%)}
-    .chip[data-active="true"]{background:linear-gradient(180deg,rgba(34,211,238,.25),rgba(139,92,246,.25));border-color:color-mix(in oklab,var(--accent) 40%,var(--accent-2) 40%)}
-    button.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#081018;border:none;padding:10px 14px;border-radius:12px;font-weight:600;letter-spacing:.2px;cursor:pointer;box-shadow:0 8px 24px rgba(34,211,238,.25),0 6px 16px rgba(139,92,246,.2)}
-    button.primary:disabled{opacity:.6;cursor:not-allowed}
-    .content{padding:20px 22px;display:grid;gap:16px}
-    .viewer{background:#0b1220;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px;display:grid;gap:12px}
-    .row{display:flex;align-items:center;gap:10px;justify-content:space-between}
-    .badge{font-size:.75rem;color:#091017;background:linear-gradient(180deg,var(--accent),var(--accent-2));padding:6px 10px;border-radius:999px;font-weight:700;letter-spacing:.3px}
-    .hint{color:var(--muted);font-size:.85rem}
-    .error{color:var(--danger)}
-    .media{display:grid;place-items:center;overflow:hidden;border-radius:14px;aspect-ratio:16/10;background:#0a0f1c;border:1px dashed rgba(255,255,255,.12)}
-    img{width:100%;height:100%;object-fit:cover;display:block}
-    .fact{color:var(--muted);font-size:.95rem;line-height:1.5}
-    footer{padding:14px 22px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:.85rem}
-    a{color:var(--accent)}
+    :root{ --bg:#0f172a; --muted:#94a3b8; --text:#e5e7eb; --accent:#22d3ee; --accent-2:#8b5cf6; --danger:#ef4444; }
+    *{ box-sizing:border-box }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial;
+          min-height:100dvh; display:grid; place-items:center; color:var(--text);
+          background:radial-gradient(1200px 600px at 20% -10%,rgba(34,211,238,.15),transparent),
+                     radial-gradient(1000px 500px at 120% 10%,rgba(139,92,246,.12),transparent),var(--bg) }
+    .app{ width:clamp(320px,90vw,680px); background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+          border:1px solid rgba(255,255,255,.08); border-radius:24px; box-shadow:0 20px 60px rgba(0,0,0,.45); overflow:hidden }
+    header{ padding:24px 28px; border-bottom:1px solid rgba(255,255,255,.06); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap }
+    header h1{ font-size:1.1rem; margin:0; color:#fff; letter-spacing:.3px }
+    header small{ color:var(--muted) }
+    .controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center }
+    .segmented{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); padding:6px; border-radius:14px; display:flex; gap:6px }
+    .chip{ cursor:pointer; padding:8px 12px; border-radius:10px; font-size:.9rem; color:var(--text);
+           border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.06) }
+    .chip[data-active="true"]{ background:linear-gradient(180deg,rgba(34,211,238,.25),rgba(139,92,246,.25));
+                               border-color:rgba(255,255,255,.3) }
+    button.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#081018; border:none;
+                    padding:10px 14px; border-radius:12px; font-weight:600; letter-spacing:.2px; cursor:pointer;
+                    box-shadow:0 8px 24px rgba(34,211,238,.25),0 6px 16px rgba(139,92,246,.2) }
+    button.primary:disabled{ opacity:.6; cursor:not-allowed }
+    .content{ padding:20px 22px; display:grid; gap:16px }
+    .viewer{ background:#0b1220; border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:14px; display:grid; gap:12px }
+    .row{ display:flex; align-items:center; gap:10px; justify-content:space-between }
+    .badge{ font-size:.75rem; color:#091017; background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:6px 10px; border-radius:999px; font-weight:700; letter-spacing:.3px }
+    .hint{ color:var(--muted); font-size:.85rem }
+    .error{ color:var(--danger) }
+    .media{ display:grid; place-items:center; overflow:hidden; border-radius:14px; aspect-ratio:16/10; background:#0a0f1c; border:1px dashed rgba(255,255,255,.12) }
+    img{ width:100%; height:100%; object-fit:cover; display:block }
+    .fact{ color:var(--muted); font-size:.95rem; line-height:1.5 }
+    footer{ padding:14px 22px; border-top:1px solid rgba(255,255,255,.06); color:var(--muted); font-size:.85rem }
+    a{ color:var(--accent) }
   </style>
 </head>
 <body>
+  <!-- SOLO UN bloque .app -->
   <main class="app" id="app">
     <header>
       <div>
@@ -63,140 +70,7 @@
     </section>
 
     <footer>
-      Fuentes: 
-      <a href="https://dog.ceo/dog-api/" target="_blank" rel="noreferrer noopener">Dog CEO API</a>,
-      <a href="https://randomfox.ca/" target="_blank" rel="noreferrer noopener">RandomFox</a>
-    </footer>
-  </main>
-
-  <script>
-    const chips = document.querySelectorAll('.chip');
-    const btn = document.getElementById('btn');
-    const badge = document.getElementById('badge');
-    const statusEl = document.getElementById('status');
-    const media = document.getElementById('media');
-    const fact = document.getElementById('fact');
-
-    let current = 'perro';
-
-    chips.forEach(ch => {
-      ch.addEventListener('click', () => {
-        chips.forEach(x => { x.dataset.active = 'false'; x.setAttribute('aria-selected','false'); });
-        ch.dataset.active = 'true'; ch.setAttribute('aria-selected','true');
-        current = ch.dataset.animal;
-        badge.textContent = current.toUpperCase();
-      });
-    });
-
-    btn.addEventListener('click', async () => {
-      statusEl.textContent = 'Cargando…';
-      btn.disabled = true;
-      try {
-        const { url, texto } = await getAnimal(current);
-        renderMedia(url);
-        fact.textContent = texto;
-        statusEl.textContent = 'Listo ✅';
-      } catch (err) {
-        console.error(err);
-        statusEl.innerHTML = '<span class="error">Error al cargar. Intenta de nuevo.</span>';
-      } finally {
-        btn.disabled = false;
-      }
-    });
-
-    function renderMedia(src){
-      media.innerHTML = '';
-      const img = new Image();
-      img.alt = 'Imagen de ' + current;
-      img.decoding = 'async';
-      img.loading = 'lazy';
-      img.referrerPolicy = 'no-referrer';
-      img.src = src + (src.includes('?') ? '&' : '?') + 'cache=' + Date.now();
-      media.appendChild(img);
-    }
-
-    async function getAnimal(kind){
-      if(kind === 'perro'){
-        const r1 = await fetch('https://dog.ceo/api/breeds/image/random');
-        const j1 = await r1.json();
-        return { url: j1.message, texto: '🐶 Perro aleatorio desde Dog CEO API.' };
-      }
-      if(kind === 'zorro'){
-        const r1 = await fetch('https://randomfox.ca/floof/');
-        const j1 = await r1.json();
-        return { url: j1.image, texto: '🦊 Zorro aleatorio desde RandomFox.' };
-      }
-      return { url:'', texto:'No se encontró el tipo.' };
-    }
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Animales Random — Solo Perro y Zorro</title>
-  <style>
-    :root{
-      --bg:#0f172a; --muted:#94a3b8; --text:#e5e7eb; --accent:#22d3ee; --accent-2:#8b5cf6; --danger:#ef4444;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica Neue,Arial;min-height:100dvh;display:grid;place-items:center;color:var(--text);background:radial-gradient(1200px 600px at 20% -10%,rgba(34,211,238,.15),transparent),radial-gradient(1000px 500px at 120% 10%,rgba(139,92,246,.12),transparent),#0f172a}
-    .app{width:clamp(320px,90vw,680px);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.45);overflow:hidden}
-    header{padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    header h1{font-size:1.1rem;margin:0;color:#fff;letter-spacing:.3px}
-    header small{color:var(--muted)}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .segmented{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);padding:6px;border-radius:14px;display:flex;gap:6px}
-    .chip{cursor:pointer;padding:8px 12px;border-radius:10px;font-size:.9rem;color:var(--text);border:1px solid rgba(255,255,255,.08);background:color-mix(in oklab,transparent 92%,#fff 8%)}
-    .chip[data-active="true"]{background:linear-gradient(180deg,rgba(34,211,238,.25),rgba(139,92,246,.25));border-color:color-mix(in oklab,var(--accent) 40%,var(--accent-2) 40%)}
-    button.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#081018;border:none;padding:10px 14px;border-radius:12px;font-weight:600;letter-spacing:.2px;cursor:pointer;box-shadow:0 8px 24px rgba(34,211,238,.25),0 6px 16px rgba(139,92,246,.2)}
-    button.primary:disabled{opacity:.6;cursor:not-allowed}
-    .content{padding:20px 22px;display:grid;gap:16px}
-    .viewer{background:#0b1220;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px;display:grid;gap:12px}
-    .row{display:flex;align-items:center;gap:10px;justify-content:space-between}
-    .badge{font-size:.75rem;color:#091017;background:linear-gradient(180deg,var(--accent),var(--accent-2));padding:6px 10px;border-radius:999px;font-weight:700;letter-spacing:.3px}
-    .hint{color:var(--muted);font-size:.85rem}
-    .error{color:var(--danger)}
-    .media{display:grid;place-items:center;overflow:hidden;border-radius:14px;aspect-ratio:16/10;background:#0a0f1c;border:1px dashed rgba(255,255,255,.12)}
-    img{width:100%;height:100%;object-fit:cover;display:block}
-    .fact{color:var(--muted);font-size:.95rem;line-height:1.5}
-    footer{padding:14px 22px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:.85rem}
-    a{color:var(--accent)}
-  </style>
-</head>
-<body>
-  <main class="app" id="app">
-    <header>
-      <div>
-        <h1>Animales Random</h1>
-        <small>Mini app — HTML + JS (Perro & Zorro)</small>
-      </div>
-      <div class="controls">
-        <div class="segmented" role="tablist" aria-label="Tipo de animal">
-          <div class="chip" data-animal="perro" data-active="true" role="tab" aria-selected="true">Perro</div>
-          <div class="chip" data-animal="zorro" role="tab" aria-selected="false">Zorro</div>
-        </div>
-        <button id="btn" class="primary">Mostrar animal</button>
-      </div>
-    </header>
-
-    <section class="content">
-      <div class="viewer">
-        <div class="row">
-          <span class="badge" id="badge">PERRO</span>
-          <span class="hint" id="status">Listo. Haz clic en “Mostrar animal”.</span>
-        </div>
-        <div class="media" id="media">
-          <span class="hint">Aquí verás la imagen 🐾</span>
-        </div>
-        <p class="fact" id="fact">Consejo: cambia de especie con las pastillas de arriba.</p>
-      </div>
-    </section>
-
-    <footer>
-      Fuentes: 
+      Fuentes:
       <a href="https://dog.ceo/dog-api/" target="_blank" rel="noreferrer noopener">Dog CEO API</a>,
       <a href="https://randomfox.ca/" target="_blank" rel="noreferrer noopener">RandomFox</a>
     </footer>
