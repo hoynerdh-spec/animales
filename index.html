@@ -154,15 +154,20 @@
       }
     });
 
-    function renderMedia(src){
-      media.innerHTML = '';
-      const img = new Image();
-      img.alt = 'Imagen de ' + current;
-      img.decoding = 'async';
-      img.loading = 'lazy';
-      img.src = src + (src.includes('?') ? '&' : '?') + 'cache=' + Date.now(); // bust cache
-      media.appendChild(img);
-    }
+function renderMedia(src){
+  media.innerHTML = '';
+  const img = new Image();
+  img.alt = 'Imagen de ' + current;
+  img.decoding = 'async';
+  img.loading = 'lazy';
+  img.referrerPolicy = 'no-referrer';
+  img.onerror = () => { // si falla, usa PlaceKitten
+    img.onerror = null;
+    img.src = 'https://placekitten.com/800/500?fallback=' + Date.now();
+  };
+  img.src = src + (src.includes('?') ? '&' : '?') + 'cache=' + Date.now();
+  media.appendChild(img);
+}
 
     async function getAnimal(kind){
       if(kind === 'perro'){
@@ -172,22 +177,36 @@
         return { url: j1.message, texto: '🐶 Perro aleatorio desde Dog CEO API.' };
       }
 if (kind === 'gato') {
-  // Usar imagen DIRECTA de CATAAS (sin JSON → sin CORS)
-  const imgUrl = 'https://cataas.com/cat?timestamp=' + Date.now();
+  // 1) Intento: TheCatAPI (sin clave)
+  try {
+    const r1 = await fetch('https://api.thecatapi.com/v1/images/search?mime_types=jpg,png');
+    if (r1.ok) {
+      const j1 = await r1.json();
+      const imgUrl = j1?.[0]?.url || '';
+      if (imgUrl) {
+        // dato curioso (opcional)
+        let texto = '🐱 Gato aleatorio (TheCatAPI).';
+        try {
+          const r2 = await fetch('https://catfact.ninja/fact');
+          if (r2.ok) texto = '🐱 ' + (await r2.json()).fact;
+        } catch {}
+        return { url: imgUrl, texto };
+      }
+    }
+  } catch {}
 
-  // Hecho curioso de gatos (si falla, mostramos un texto por defecto)
-  let texto = '🐱 Gato aleatorio desde CATAAS.';
+  // 2) Intento: CATAAS imagen directa (sin JSON → sin CORS)
+  const imgUrl2 = 'https://cataas.com/cat';
+  let texto2 = '🐱 Gato aleatorio (CATAAS).';
   try {
     const r2 = await fetch('https://catfact.ninja/fact');
-    const j2 = await r2.json();
-    texto = '🐱 ' + j2.fact;
-  } catch (_) {
-    // silencio: mantenemos el texto por defecto
-  }
+    if (r2.ok) texto2 = '🐱 ' + (await r2.json()).fact;
+  } catch {}
+  return { url: imgUrl2, texto: texto2 };
 
-  return { url: imgUrl, texto };
     }
   </script>
 </body>
 </html>
+
 
