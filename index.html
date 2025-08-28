@@ -171,25 +171,23 @@
         const j1 = await r1.json();
         return { url: j1.message, texto: '🐶 Perro aleatorio desde Dog CEO API.' };
       }
-      if(kind === 'gato'){
-        // Imagen aleatoria de gato desde CATAAS (Cat as a Service)
-        const r1 = await fetch('https://cataas.com/cat?json=true');
-        const j1 = await r1.json();
-        const imgUrl = 'https://cataas.com/cat/' + j1._id;
-        // Hecho curioso de gatos
-        const r2 = await fetch('https://catfact.ninja/fact');
-        const j2 = await r2.json();
-        return { url: imgUrl, texto: '🐱 ' + j2.fact };
-      }
-      if(kind === 'zorro'){
-        // Imagen aleatoria de zorro
-        const r1 = await fetch('https://randomfox.ca/floof/');
-        const j1 = await r1.json();
-        return { url: j1.image, texto: '🦊 Zorro aleatorio desde RandomFox.' };
-      }
-      // Fallback
-      return { url:'', texto:'No se encontró el tipo.' };
+if (kind === 'gato') {
+  // Usar imagen DIRECTA de CATAAS (sin JSON → sin CORS)
+  const imgUrl = 'https://cataas.com/cat?timestamp=' + Date.now();
+
+  // Hecho curioso de gatos (si falla, mostramos un texto por defecto)
+  let texto = '🐱 Gato aleatorio desde CATAAS.';
+  try {
+    const r2 = await fetch('https://catfact.ninja/fact');
+    const j2 = await r2.json();
+    texto = '🐱 ' + j2.fact;
+  } catch (_) {
+    // silencio: mantenemos el texto por defecto
+  }
+
+  return { url: imgUrl, texto };
     }
   </script>
 </body>
 </html>
+
